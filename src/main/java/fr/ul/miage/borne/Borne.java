@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import fr.ul.miage.borne.config.Db;
+import fr.ul.miage.borne.model.ChargeStation;
+
 public class Borne {
 
     public List<ChargeStation> findAvailableStations() {

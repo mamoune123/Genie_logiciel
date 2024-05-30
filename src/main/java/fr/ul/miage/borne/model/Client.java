@@ -1,4 +1,6 @@
-package fr.ul.miage.borne;
+// fr/ul/miage/borne/model/Client.java
+package fr.ul.miage.borne.model;
+
 import java.util.List;
 
 public class Client {
@@ -10,7 +12,6 @@ public class Client {
     private String email;
     private String debitCardNumber;
     private List<String> licensePlates;
-
 
     public Client(String firstName, String lastName, String address, String mobileNumber, String email, String debitCardNumber, List<String> licensePlates) {
         this.firstName = firstName;
@@ -84,11 +85,12 @@ public class Client {
     public List<String> getLicensePlates() {
         return licensePlates;
     }
-    public String getInfo() {
-        return "Nom: " + lastName + ", Prénom: " + firstName + ", Téléphone: " + mobileNumber + ", Email: " + email;
-    }
 
     public void setLicensePlates(List<String> licensePlates) {
         this.licensePlates = licensePlates;
+    }
+
+    public String getInfo() {
+        return "Nom: " + lastName + ", Prénom: " + firstName + ", Téléphone: " + mobileNumber + ", Email: " + email;
     }
 }

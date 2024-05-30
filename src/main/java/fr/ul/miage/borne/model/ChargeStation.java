@@ -1,4 +1,5 @@
-package fr.ul.miage.borne;
+// fr/ul/miage/borne/model/ChargeStation.java
+package fr.ul.miage.borne.model;
 
 public class ChargeStation {
     private Long id;

@@ -1,17 +1,21 @@
-package fr.ul.miage.borne;
+// fr/ul/miage/borne/main/Menu.java
+package fr.ul.miage.borne.main;
+
+import fr.ul.miage.borne.config.DbSetUp;
+import fr.ul.miage.borne.controller.ClientController;
+import fr.ul.miage.borne.controller.ReservationController;
+import fr.ul.miage.borne.model.Client;
+import fr.ul.miage.borne.model.Reservation;
 
 import java.util.*;
-import java.io.*;
-import java.sql.*;
-
+import java.util.Scanner;
 
 public class Menu {
-
-    private static final ClientBD clientBD = new ClientBD();
-    private static final ReservationBD reservationDAO = new ReservationBD();
+    private static final ClientController clientController = new ClientController();
+    private static final ReservationController reservationController = new ReservationController();
 
     public static void main(String[] args) {
-    	DbSetUp.main(new String[0]);
+        DbSetUp.main(new String[0]);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -38,7 +42,7 @@ public class Menu {
                     handleReservationNumber(scanner);
                     break;
                 case 4:
-                	showAllClients();
+                    showAllClients();
                     break;
                 case 5:
                     showAllReservations();
@@ -46,7 +50,6 @@ public class Menu {
                 case 6:
                     System.out.println("Au revoir!");
                     return;
-                    
                 default:
                     System.out.println("Option invalide, veuillez réessayer.");
             }
@@ -60,8 +63,16 @@ public class Menu {
         String lastName = scanner.nextLine();
         System.out.print("Entrez votre adresse: ");
         String address = scanner.nextLine();
-        System.out.print("Entrez votre numéro de mobile: ");
-        String mobileNumber = scanner.nextLine();
+        String mobileNumber;
+        while (true) {
+            System.out.print("Entrez votre numéro de mobile: ");
+            mobileNumber = scanner.nextLine();
+            if (isValidPhoneNumber(mobileNumber)) {
+                break;
+            } else {
+                System.out.println("Le numéro de téléphone doit être composé de 10 chiffres.");
+            }
+        }
 
         String email;
         while (true) {
@@ -81,19 +92,19 @@ public class Menu {
         List<String> licensePlates = Arrays.asList(licensePlatesInput.split(","));
 
         Client client = new Client(firstName, lastName, address, mobileNumber, email, debitCardNumber, licensePlates);
-        clientBD.save(client);
+        String result = clientController.registerClient(client);
 
-        System.out.println("Inscription réussie!");
+        System.out.println(result);
     }
 
     private static void handleLicensePlate(Scanner scanner) {
         System.out.print("Entrez le numéro de plaque d'immatriculation: ");
         String licensePlate = scanner.nextLine();
-        Optional<Client> clientOpt = clientBD.findByLicensePlate(licensePlate);
+        Optional<Client> clientOpt = clientController.findClientByLicensePlate(licensePlate);
 
         if (clientOpt.isPresent()) {
             System.out.println("Numéro de plaque reconnu.");
-            Optional<Reservation> reservationOpt = reservationDAO.findByLicensePlate(licensePlate);
+            Optional<Reservation> reservationOpt = reservationController.findReservationByLicensePlate(licensePlate);
 
             if (reservationOpt.isPresent()) {
                 System.out.println("Réservation trouvée pour ce véhicule.");
@@ -104,7 +115,7 @@ public class Menu {
                 scanner.nextLine();  // Consume newline
 
                 Reservation reservation = new Reservation(licensePlate, duration);
-                reservationDAO.save(reservation);
+                reservationController.createReservation(reservation);
 
                 System.out.println("Réservation temporaire créée pour " + duration + " minutes.");
             }
@@ -123,7 +134,7 @@ public class Menu {
     private static void handleReservationNumber(Scanner scanner) {
         System.out.print("Entrez le numéro de réservation: ");
         String reservationNumber = scanner.nextLine();
-        Optional<Reservation> reservationOpt = reservationDAO.findByLicensePlate(reservationNumber);
+        Optional<Reservation> reservationOpt = reservationController.findReservationByLicensePlate(reservationNumber);
 
         if (reservationOpt.isPresent()) {
             System.out.println("Réservation trouvée.");
@@ -136,9 +147,14 @@ public class Menu {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         return email.matches(emailRegex) && email.contains(".");
     }
-    
+    private static boolean isValidPhoneNumber(String mobileNumber) {
+        String phoneNumberRegex = "^[0-9]{10}$";
+        return mobileNumber.matches(phoneNumberRegex);
+    }
+
+
     private static void showAllClients() {
-        List<Client> clients = clientBD.getAllClients();
+        List<Client> clients = clientController.getAllClients();
         if (clients.isEmpty()) {
             System.out.println("Aucun client trouvé.");
         } else {
@@ -148,8 +164,9 @@ public class Menu {
             }
         }
     }
+
     private static void showAllReservations() {
-        List<Reservation> reservations = reservationDAO.getAllReservations();
+        List<Reservation> reservations = reservationController.getAllReservations();
         if (reservations.isEmpty()) {
             System.out.println("Aucune réservation trouvée.");
         } else {
@@ -159,5 +176,4 @@ public class Menu {
             }
         }
     }
-
 }

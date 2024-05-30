@@ -1,12 +1,15 @@
-package fr.ul.miage.borne;
+// fr/ul/miage/borne/dao/ReservationBD.java
+package fr.ul.miage.borne.dao;
 
+import fr.ul.miage.borne.model.Reservation;
+import fr.ul.miage.borne.config.Db;
 
 import java.sql.*;
 import java.util.*;
 
 public class ReservationBD {
-	
-	public void save(Reservation reservation) {
+
+    public void save(Reservation reservation) {
         String sql = "INSERT INTO reservations (license_plate, start_time, end_time, client_id, is_guaranteed) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Db.getConnection();
@@ -60,7 +63,7 @@ public class ReservationBD {
         }
         return Optional.empty();
     }
-    
+
     public List<Reservation> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
         String sql = "SELECT * FROM reservations";
@@ -85,6 +88,5 @@ public class ReservationBD {
             System.out.println(e.getMessage());
         }
         return reservations;
-        }
-
+    }
 }

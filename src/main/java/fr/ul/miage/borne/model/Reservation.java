@@ -1,16 +1,15 @@
-package fr.ul.miage.borne;
+// fr/ul/miage/borne/model/Reservation.java
+package fr.ul.miage.borne.model;
 
 import java.time.LocalDateTime;
 
 public class Reservation {
-	private Long id;
+    private Long id;
     private String licensePlate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Client client;
     private boolean isGuaranteed;
-
-    // Getters and Setters
 
     public Reservation(String licensePlate, int duration) {
         this.licensePlate = licensePlate;
