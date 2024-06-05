@@ -91,4 +91,5 @@ public class Client {
     public void setLicensePlates(List<String> licensePlates) {
         this.licensePlates = licensePlates;
     }
+    
 }

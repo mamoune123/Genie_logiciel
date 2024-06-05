@@ -12,10 +12,12 @@ public class Reservation {
 
     // Getters and Setters
 
-    public Reservation(String licensePlate, int duration) {
+    public Reservation(String licensePlate, LocalDateTime startTime, LocalDateTime endTime, Client client, boolean isGuaranteed) {
         this.licensePlate = licensePlate;
-        this.startTime = LocalDateTime.now();
-        this.endTime = this.startTime.plusMinutes(duration);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.client = client;
+        this.isGuaranteed = isGuaranteed;
     }
 
     public Reservation() {
@@ -67,5 +69,8 @@ public class Reservation {
 
     public void setGuaranteed(boolean guaranteed) {
         isGuaranteed = guaranteed;
+    }
+    public String getInfo() {
+        return "ID: " + id + ", Matricule: " + licensePlate + ", Crenaux = ["+startTime +"|"+endTime+"]";
     }
 }

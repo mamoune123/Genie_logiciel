@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ReservationBD {
 	
-	public void save(Reservation reservation) {
+	public  void save(Reservation reservation) {
         String sql = "INSERT INTO reservations (license_plate, start_time, end_time, client_id, is_guaranteed) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Db.getConnection();
@@ -33,7 +33,7 @@ public class ReservationBD {
         }
     }
 
-    public Optional<Reservation> findByLicensePlate(String licensePlate) {
+    public  Optional<Reservation> findByLicensePlate(String licensePlate) {
         String sql = "SELECT * FROM reservations WHERE license_plate = ?";
 
         try (Connection conn = Db.getConnection();
@@ -61,7 +61,7 @@ public class ReservationBD {
         return Optional.empty();
     }
     
-    public List<Reservation> getAllReservations() {
+    public  List<Reservation> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
         String sql = "SELECT * FROM reservations";
 

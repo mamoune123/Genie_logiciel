@@ -1,12 +1,11 @@
 package fr.ul.miage.borne;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class Borne {
 
-    public List<ChargeStation> findAvailableStations() {
+
+public class ChargeStationBD {
+	public static List<ChargeStation> findAvailableStations() {
         String sql = "SELECT * FROM charge_stations WHERE status = 'available'";
         List<ChargeStation> stations = new ArrayList<>();
 
@@ -15,20 +14,20 @@ public class Borne {
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                ChargeStation station = new ChargeStation(
-                    rs.getLong("id"),
-                    rs.getString("location"),
-                    rs.getString("status")
-                );
+            	 ChargeStation station = new ChargeStation(
+                         rs.getLong("id"),
+                         rs.getString("location"),
+                         rs.getString("status")
+                     );
                 stations.add(station);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error fetching available charge stations", e);
+            System.out.println(e.getMessage());
         }
         return stations;
     }
 
-    public void updateStationStatus(long stationId, String status) {
+    public static void updateStationStatus(long stationId, String status) {
         String sql = "UPDATE charge_stations SET status = ? WHERE id = ?";
 
         try (Connection conn = Db.getConnection();
@@ -38,7 +37,7 @@ public class Borne {
             pstmt.setLong(2, stationId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error updating charge station status", e);
+            System.out.println(e.getMessage());
         }
     }
 }

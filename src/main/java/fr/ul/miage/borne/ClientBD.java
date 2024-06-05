@@ -49,7 +49,7 @@ public class ClientBD {
 	        }
 	    }
 
-	    public Optional<Client> findByEmail(String email) {
+	    public  Optional<Client> findByEmail(String email) {
 	        String sql = "SELECT * FROM clients WHERE email = ?";
 
 	        try (Connection conn = Db.getConnection();
@@ -77,7 +77,7 @@ public class ClientBD {
 	        return Optional.empty();
 	    }
 
-	    private List<String> findLicensePlates(Long clientId) {
+	    private  List<String> findLicensePlates(Long clientId) {
 	        String sql = "SELECT license_plate FROM license_plates WHERE client_id = ?";
 	        List<String> plates = new ArrayList<>();
 
@@ -97,7 +97,7 @@ public class ClientBD {
 	        return plates;
 	    }
 
-	    public Optional<Client> findByLicensePlate(String licensePlate) {
+	    public  Optional<Client> findByLicensePlate(String licensePlate) {
 	        String sql = "SELECT c.* FROM clients c JOIN license_plates lp ON c.id = lp.client_id WHERE lp.license_plate = ?";
 
 	        try (Connection conn = Db.getConnection();
@@ -124,7 +124,8 @@ public class ClientBD {
 	        }
 	        return Optional.empty();
 	    }
-	    public List<Client> getAllClients() {
+	    
+	    public  List<Client> getAllClients() {
 	        List<Client> clients = new ArrayList<>();
 	        String sql = "SELECT * FROM clients";
 
@@ -149,4 +150,5 @@ public class ClientBD {
 	        }
 	        return clients;
 	    }
+	    
 }
