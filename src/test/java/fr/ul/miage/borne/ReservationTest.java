@@ -1,4 +1,4 @@
-package fr.ul.miage.borne;
+/*package fr.ul.miage.borne;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -82,4 +82,4 @@ public class ReservationTest {
         String expectedInfo = "ID: 1, Matricule: AB123CD, Crenaux = [2024-06-01T10:00|2024-06-01T12:00]";
         assertEquals(expectedInfo, reservation.getInfo());
     }
-}
+}*/

@@ -23,8 +23,17 @@ public class DbSetUp {
 
 	            // Exécuter le script SQL
 	            stmt.execute(sql.toString());
+	            
+	            String insertSql = "MERGE INTO charge_stations (location, status) KEY (location) VALUES" +
+	                    "('Station 1', 'available')," +
+	                    "('Station 2', 'available')," +
+	                    "('Station 3', 'available')," +
+	                    "('Station 4', 'available')," +
+	                    "('Station 5', 'available');";
 
-	            System.out.println("Tables créées avec succès");
+	            stmt.execute(insertSql);
+
+	            System.out.println("Tables créées avec succès et données insérées");
 
 	        } catch (Exception e) {
 	            e.printStackTrace();

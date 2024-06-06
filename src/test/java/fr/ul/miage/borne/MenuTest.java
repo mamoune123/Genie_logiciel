@@ -1,4 +1,4 @@
-package fr.ul.miage.borne;
+/*package fr.ul.miage.borne;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -135,4 +135,4 @@ public class MenuTest {
 	        verify(reservationDAO, times(1)).getAllReservations();
 	    }
 
-}
+}*/

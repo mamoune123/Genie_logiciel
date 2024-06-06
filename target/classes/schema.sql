@@ -69,11 +69,4 @@
     );
 
 
-INSERT INTO charge_stations (location, status) VALUES
-('Station 1', 'available'),
-('Station 2', 'available'),
-('Station 3', 'available'),
-('Station 4', 'available'),
-('Station 5', 'available')
-ON CONFLICT (location) DO NOTHING;
 
